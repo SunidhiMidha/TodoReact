@@ -1,0 +1,47 @@
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+const uuid = require('uuid')
+
+export class AddTodo extends Component {
+    
+    state = {
+        id: uuid.v4(),
+        title: '',
+        completed: 'false'
+    }
+
+    onChange = (e) => this.setState({[e.target.name]: e.target.value})
+
+    onSubmit = (e) => {
+        e.preventDefault();
+        this.props.addTask(this.state.title);
+        this.setState({title: ''});
+        
+    }
+    
+    render() {
+        return (
+        <form style={{display: 'flex'}} onSubmit={this.onSubmit}>
+            <input 
+                type="text" 
+                name="title" 
+                style={{flex: '10'}}
+                placeholder='Add ToDo'
+                value={this.state.title}
+                onChange={this.onChange}
+            />
+            <input 
+                type="submit" 
+                value='Submit'
+                className='btn'
+                style={{flex: '1'}}
+            />
+        </form>
+    )
+  }
+}
+
+AddTodo.propTypes = {
+    addTask: PropTypes.func.isRequired
+}
+export default AddTodo
